@@ -1,5 +1,5 @@
+#include "adjacency_list.hpp"
 #include "parse_arguments.hpp"
-#include "read_adj_list.hpp"
 
 int main(const int argc, const char *argv[])
 {
@@ -9,6 +9,6 @@ int main(const int argc, const char *argv[])
     parsed_arguments(argc, argv, adj_list_json_file, start_vertex, end_vertex);
 
   // Import data
-  read_adj_list(adj_list_json_file);
+  AdjacencyList adj_list = adjacency_list(adj_list_json_file);
   return EXIT_SUCCESS;
 }
