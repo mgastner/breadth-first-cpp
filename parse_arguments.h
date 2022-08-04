@@ -8,10 +8,10 @@
 #include "argparse.hpp"
 
 argparse::ArgumentParser parsed_arguments(
-  const int argc,
+  int argc,
   const char *argv[],
   std::string &adj_list_json,
-  unsigned int &start_vertex,
-  unsigned int &end_vertex);
+  std::string &start_vertex,
+  std::string &end_vertex);
 
 #endif  // BREADTH_FIRST_CPP_PARSE_ARGUMENTS_H
