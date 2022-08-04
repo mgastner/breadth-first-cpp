@@ -8,9 +8,10 @@
 #include <set>
 #include <string>
 
-typedef std::string Vertex;
-typedef std::set<std::string> AdjacentVertices;
-typedef std::pair<Vertex, AdjacentVertices> AdjacencyList;
+typedef const std::string Vertex;
+typedef const std::set<std::string> AdjacentVertices;
+typedef const std::pair<Vertex, AdjacentVertices> AdjacencyListEntry;
+typedef std::set<AdjacencyListEntry> AdjacencyList;
 
 AdjacencyList adjacency_list(const std::string &adj_list_json_file);
 

@@ -9,8 +9,6 @@
 
 AdjacencyList adjacency_list(const std::string &adj_list_json_file)
 {
-  std::cout << "In " << __func__ << "()" << std::endl;
-
   // Open file
   std::ifstream in_file(adj_list_json_file);
   if (!in_file) {
@@ -30,9 +28,15 @@ AdjacencyList adjacency_list(const std::string &adj_list_json_file)
     _Exit(EXIT_FAILURE);
   }
 
-  AdjacencyList adj_list;
-  for (auto &[key, val] : j.items()) {
-    std::cout << "key: " << key << ", value:" << val << '\n';
+  // Create adjacency list
+  std::set<AdjacencyListEntry> adj_list;
+  for (auto &[vertex, adj_vertices_json] : j.items()) {
+    std::cout << "vertex: " << vertex
+              << ", adj_vertices_json:" << adj_vertices_json << '\n';
+    AdjacentVertices adj_vertices =
+      static_cast<AdjacentVertices>(adj_vertices_json);
+    AdjacencyListEntry adj_list_entry = std::make_pair(vertex, adj_vertices);
+    adj_list.insert(adj_list_entry);
   }
   return adj_list;
 }
