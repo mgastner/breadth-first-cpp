@@ -14,7 +14,7 @@ struct VertexProperties {
   unsigned int distance;
   std::string parent;
 };
-std::map<std::string, VertexProperties> vertices(
-  const std::string &adj_list_json_file);
+typedef std::map<std::string, VertexProperties> Graph;
+Graph graph(const std::string &adj_list_json_file);
 
 #endif  // BREADTH_FIRST_CPP_VERTEX_PROPERTIES_HPP

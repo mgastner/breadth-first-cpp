@@ -1,10 +1,9 @@
-#include "vertex_properties.hpp"
+#include "graph.hpp"
 #include <fstream>
 #include <iostream>
 #include <nlohmann/json.hpp>
 
-std::map<std::string, VertexProperties> vertices(
-  const std::string &adj_list_json_file)
+Graph graph(const std::string &adj_list_json_file)
 {
   // Open file
   std::ifstream in_file(adj_list_json_file);
@@ -26,13 +25,13 @@ std::map<std::string, VertexProperties> vertices(
   }
 
   // Create map from vertex ID to vertex properties
-  std::map<std::string, VertexProperties> v;
+  Graph g;
   for (const auto &[id, adj_vertices_json] : j.items()) {
-    v[id] = {
+    g[id] = {
       adj_vertices_json,
       infinity,
       ""  // Empty string as a sign that the parent is unknown
     };
   }
-  return v;
+  return g;
 }
