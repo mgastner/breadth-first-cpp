@@ -1,7 +1,3 @@
-//
-// Created by Michael Gastner on 4/8/22.
-//
-
 #ifndef BREADTH_FIRST_CPP_VERTEX_PROPERTIES_HPP
 #define BREADTH_FIRST_CPP_VERTEX_PROPERTIES_HPP
 

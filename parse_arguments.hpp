@@ -1,7 +1,3 @@
-//
-// Created by Michael Gastner on 4/8/22.
-//
-
 #ifndef BREADTH_FIRST_CPP_PARSE_ARGUMENTS_HPP
 #define BREADTH_FIRST_CPP_PARSE_ARGUMENTS_HPP
 

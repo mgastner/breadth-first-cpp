@@ -1,7 +1,3 @@
-//
-// Created by Michael Gastner on 4/8/22.
-//
-
 #include "parse_arguments.hpp"
 #include <iostream>
 

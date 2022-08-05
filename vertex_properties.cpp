@@ -1,7 +1,3 @@
-//
-// Created by Michael Gastner on 4/8/22.
-//
-
 #include "vertex_properties.hpp"
 #include <fstream>
 #include <iostream>

@@ -1,4 +1,5 @@
 #include "parse_arguments.hpp"
+#include "print_path.hpp"
 #include "vertex_properties.hpp"
 #include <queue>
 
@@ -34,11 +35,12 @@ int main(const int argc, const char *argv[])
     }
   }
 
-  // Output:
+  // Output
   std::cout << "\n";
 
-  // If no target vertex is given, print distance and parent of all vertices.
   if (target_vertex.empty()) {
+
+    // If no target vertex is given, print distance and parent of all vertices
     for (const auto &[id, prop] : v) {
       std::cout << "vertex ID: " << id << "\n\tdistance from source: ";
       if (prop.distance == infinity) {
@@ -54,6 +56,10 @@ int main(const int argc, const char *argv[])
       }
       std::cout << std::endl;
     }
+  } else {
+
+    // If a target vertex is known, print path
+    print_path(source_vertex, target_vertex);
   }
   return EXIT_SUCCESS;
 }
