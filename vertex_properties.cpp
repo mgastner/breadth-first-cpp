@@ -2,17 +2,13 @@
 // Created by Michael Gastner on 4/8/22.
 //
 
-#include "vertex.hpp"
+#include "vertex_properties.hpp"
 #include <fstream>
 #include <iostream>
 #include <nlohmann/json.hpp>
 
-bool operator<(const Vertex &lhs, const Vertex &rhs)
-{
-  return lhs.id < rhs.id;
-}
-
-std::set<Vertex> vertices(const std::string &adj_list_json_file)
+std::map<std::string, VertexProperties> vertices(
+  const std::string &adj_list_json_file)
 {
   // Open file
   std::ifstream in_file(adj_list_json_file);
@@ -33,16 +29,15 @@ std::set<Vertex> vertices(const std::string &adj_list_json_file)
     _Exit(EXIT_FAILURE);
   }
 
-  // Create adjacency list
-  std::set<Vertex> v;
+  // Create map from vertex ID to vertex properties
+  std::map<std::string, VertexProperties> v;
   for (auto &[id, adj_vertices_json] : j.items()) {
-    v.insert(
-      {id,
-       adj_vertices_json,
-       "",  // Empty string as a sign that the parent is unknown.
+    v[id] = {
+      adj_vertices_json,
+      "",  // Empty string as a sign that the parent is unknown.
 
-       // Largest possible unsigned int as symbol of infinite distance.
-       std::numeric_limits<unsigned int>::max()});
+      // Largest possible unsigned int as symbol of infinite distance.
+      std::numeric_limits<unsigned int>::max()};
   }
   return v;
 }

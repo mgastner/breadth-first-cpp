@@ -1,5 +1,6 @@
 #include "parse_arguments.hpp"
-#include "vertex.hpp"
+#include "vertex_properties.hpp"
+#include <queue>
 
 int main(const int argc, const char *argv[])
 {
@@ -8,22 +9,20 @@ int main(const int argc, const char *argv[])
   argparse::ArgumentParser arguments =
     parsed_arguments(argc, argv, adj_list_json_file, start_vertex, end_vertex);
 
-  // Import data
-  const std::set<Vertex> v = vertices(adj_list_json_file);
+  // Import data. All vertices are initialized as being undiscovered.
+  const std::map<std::string, VertexProperties> v =
+    vertices(adj_list_json_file);
 
-  //  // Initialize all vertices as undiscovered
-  //  std::map<std::string, VertexProperties> vertex_status;
-  //  for (const auto &adj_list_entry : adj_list) {
-  //    std::pair<std::string, VertexProperties> vertex_info =
-  //      std::make_pair(adj_list_entry.first, VertexProperties());
-  //    vertex_status.insert(vertex_info);
-  //  }
-  //
-  //  // Debug output
-  //  for (auto &[id, prop] : vertex_status) {
-  //    std::cout << "id = " << id << ", "
-  //              << "parent = " << prop.parent << ", "
-  //              << "distance = " << prop.distance << std::endl;
-  //  }
+  // Debug output
+  for (auto &[id, prop] : v) {
+    std::cout << "id = " << id << ", "
+              //<< "prop.adjacent_vertices = " << prop.adjacent_vertices << ", "
+              << "prop.parent = " << prop.parent << ", "
+              << "prop.distance = " << prop.distance << std::endl;
+  }
+
+  // Initialize queue
+  std::queue<std::string> q;
+  q.push(start_vertex);
   return EXIT_SUCCESS;
 }
