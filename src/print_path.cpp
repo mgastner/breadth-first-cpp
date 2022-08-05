@@ -3,8 +3,8 @@
 
 void print_path(
   Graph graph,
-  std::string source_vertex,
-  std::string target_vertex)
+  const std::string &source_vertex,
+  const std::string &target_vertex)
 {
   if (source_vertex == target_vertex) {
     std::cout << source_vertex;

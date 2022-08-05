@@ -16,9 +16,21 @@ int main(const int argc, const char *argv[])
 
   // Import data. All vertices are initialized as being undiscovered.
   auto g = graph(adj_list_json_file);
-  std::queue<std::string> q;
+
+  // Are source vertex and target vertex in the graph?
+  if (g.find(source_vertex) == g.end()) {
+    std::cerr << "ERROR: Non-existing source vertex " << source_vertex
+              << std::endl;
+    std::exit(EXIT_FAILURE);
+  }
+  if (g.find(target_vertex) == g.end()) {
+    std::cerr << "ERROR: Non-existing target vertex " << target_vertex
+              << std::endl;
+    std::exit(EXIT_FAILURE);
+  }
 
   // Discover the source
+  std::queue<std::string> q;
   q.push(source_vertex);
   g[source_vertex].distance = 0;
 
@@ -38,7 +50,8 @@ int main(const int argc, const char *argv[])
   // Output
   if (target_vertex.empty()) {
 
-    // If no target vertex is given, print distance and parent of all vertices
+    // If no target vertex is given, print distances and parents of all
+    // vertices
     std::cout << "\n";
     for (const auto &[id, prop] : g) {
       std::cout << "vertex ID: " << id << "\n\tdistance from source: ";
@@ -58,7 +71,9 @@ int main(const int argc, const char *argv[])
   } else {
 
     // If a target vertex is known, print path
-    std::cout << "Path:\n\t";
+    if (g[target_vertex].distance < infinity) {
+      std::cout << "Path of length " << g[target_vertex].distance << ":\n\t";
+    }
     print_path(g, source_vertex, target_vertex);
     std::cout << std::endl;
   }

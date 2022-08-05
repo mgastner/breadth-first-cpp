@@ -27,7 +27,7 @@ argparse::ArgumentParser parsed_arguments(
   } catch (const std::runtime_error &err) {
     std::cerr << "ERROR: " << err.what() << std::endl;
     std::cerr << arguments;
-    std::exit(1);
+    std::exit(EXIT_FAILURE);
   }
   if (arguments.is_used("adj_list_json_file")) {
     adj_list_json_file = arguments.get("adj_list_json_file");

@@ -33,5 +33,30 @@ Graph graph(const std::string &adj_list_json_file)
       ""  // Empty string as a sign that the parent is unknown
     };
   }
+
+  // Do all adjacent vertices exist?
+  std::set<std::string> focal_vertices;
+  std::set<std::string> adj_vertices;
+  for (const auto &[id, prop] : g) {
+    focal_vertices.insert(id);
+    for (const auto &a : prop.adjacent_vertices) {
+      adj_vertices.insert(a);
+    }
+  }
+  std::set<std::string> diff;
+  std::set_difference(
+    adj_vertices.begin(),
+    adj_vertices.end(),
+    focal_vertices.begin(),
+    focal_vertices.end(),
+    std::inserter(diff, diff.end()));
+  if (!diff.empty()) {
+    std::cerr << "ERROR: Non-existing adjacent vertices:\n\t";
+    for (const auto &d : diff) {
+      std::cerr << " " << d;
+    }
+    std::cerr << std::endl;
+    std::exit(EXIT_FAILURE);
+  }
   return g;
 }
