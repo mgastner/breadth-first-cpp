@@ -9,8 +9,8 @@ argparse::ArgumentParser parsed_arguments(
   const int argc,
   const char *argv[],
   std::string &adj_list_json_file,
-  std::string &start_vertex,
-  std::string &end_vertex)
+  std::string &source_vertex,
+  std::string &target_vertex)
 {
   // Create parser for arguments using argparse.
   // From https://github.com/p-ranav/argparse
@@ -18,12 +18,12 @@ argparse::ArgumentParser parsed_arguments(
   arguments.add_argument("adj_list_json_file")
     .default_value("none")
     .help("File path: JSON file");
-  arguments.add_argument("start_vertex")
+  arguments.add_argument("source_vertex")
     .default_value("none")
-    .help("Start vertex: key in JSON file (string)");
-  arguments.add_argument("-e", "--end_vertex")
+    .help("Source vertex: key in JSON file (string)");
+  arguments.add_argument("-t", "--target_vertex")
     .default_value("none")
-    .help("End vertex: key in JSON file (string)");
+    .help("Target vertex: key in JSON file (string)");
 
   // Parse command line arguments
   try {
@@ -41,23 +41,23 @@ argparse::ArgumentParser parsed_arguments(
               << std::endl;
     _Exit(EXIT_FAILURE);
   }
-  if (arguments.is_used("start_vertex")) {
-    start_vertex = arguments.get("start_vertex");
+  if (arguments.is_used("source_vertex")) {
+    source_vertex = arguments.get("source_vertex");
   } else {
-    std::cerr << "ERROR: start vertex of breadth-first search unknown. "
+    std::cerr << "ERROR: source vertex of breadth-first search unknown. "
               << "Use -h flag to see list of command-line arguments."
               << std::endl;
     _Exit(EXIT_FAILURE);
   }
-  if (arguments.is_used("end_vertex")) {
-    end_vertex = arguments.get("end_vertex");
+  if (arguments.is_used("target_vertex")) {
+    target_vertex = arguments.get("target_vertex");
   }
   std::cout << "Reading adjacency list from " << adj_list_json_file
             << std::endl;
-  std::cout << "Start vertex of breadth-first search: " << start_vertex
+  std::cout << "Source vertex of breadth-first search: " << source_vertex
             << std::endl;
-  if (!end_vertex.empty()) {
-    std::cout << "End vertex: " << end_vertex << std::endl;
+  if (!target_vertex.empty()) {
+    std::cout << "Target vertex: " << target_vertex << std::endl;
   }
   return arguments;
 }
