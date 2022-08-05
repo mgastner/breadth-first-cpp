@@ -2,12 +2,17 @@
 // Created by Michael Gastner on 4/8/22.
 //
 
-#include "adjacency_list.hpp"
+#include "vertex.hpp"
 #include <fstream>
 #include <iostream>
 #include <nlohmann/json.hpp>
 
-AdjacencyList adjacency_list(const std::string &adj_list_json_file)
+bool operator<(const Vertex &lhs, const Vertex &rhs)
+{
+  return lhs.id < rhs.id;
+}
+
+std::set<Vertex> vertices(const std::string &adj_list_json_file)
 {
   // Open file
   std::ifstream in_file(adj_list_json_file);
@@ -29,14 +34,15 @@ AdjacencyList adjacency_list(const std::string &adj_list_json_file)
   }
 
   // Create adjacency list
-  std::set<AdjacencyListEntry> adj_list;
-  for (auto &[vertex, adj_vertices_json] : j.items()) {
-    std::cout << "vertex: " << vertex
-              << ", adj_vertices_json:" << adj_vertices_json << '\n';
-    AdjacentVertices adj_vertices =
-      static_cast<AdjacentVertices>(adj_vertices_json);
-    AdjacencyListEntry adj_list_entry = std::make_pair(vertex, adj_vertices);
-    adj_list.insert(adj_list_entry);
+  std::set<Vertex> v;
+  for (auto &[id, adj_vertices_json] : j.items()) {
+    v.insert(
+      {id,
+       adj_vertices_json,
+       "",  // Empty string as a sign that the parent is unknown.
+
+       // Largest possible unsigned int as symbol of infinite distance.
+       std::numeric_limits<unsigned int>::max()});
   }
-  return adj_list;
+  return v;
 }

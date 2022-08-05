@@ -15,7 +15,7 @@ add_compile_options(-Wall -Wextra -pedantic)
 find_package(nlohmann_json REQUIRED)
 
 # Adding C++ files needed for compilation.
-add_executable(breadth_first_cpp main.cpp adjacency_list.cpp parse_arguments.cpp parse_arguments.hpp adjacency_list.hpp)
+add_executable(breadth_first_cpp main.cpp vertex.cpp parse_arguments.cpp parse_arguments.hpp vertex.hpp)
 
 # Linking appropriate libraries to target.
 target_link_libraries(breadth_first_cpp nlohmann_json)
