@@ -35,15 +35,15 @@ argparse::ArgumentParser parsed_arguments(
     std::cerr << "ERROR: File path to adjacency list is unknown. "
               << "Use -h flag to see list of command-line arguments."
               << std::endl;
-    _Exit(EXIT_FAILURE);
+    std::exit(EXIT_FAILURE);
   }
   if (arguments.is_used("source_vertex")) {
     source_vertex = arguments.get("source_vertex");
   } else {
-    std::cerr << "ERROR: source vertex of breadth-first search unknown. "
+    std::cerr << "ERROR: source vertex of breadth-first search unknown.\n"
               << "Use -h flag to see list of command-line arguments."
               << std::endl;
-    _Exit(EXIT_FAILURE);
+    std::exit(EXIT_FAILURE);
   }
   if (arguments.is_used("target_vertex")) {
     target_vertex = arguments.get("target_vertex");

@@ -22,12 +22,12 @@ std::map<std::string, VertexProperties> vertices(
   } catch (nlohmann::json::parse_error &e) {
     std::cerr << "ERROR: " << e.what() << ".\nexception id: " << e.id
               << "\nbyte position of error: " << e.byte << std::endl;
-    _Exit(EXIT_FAILURE);
+    std::exit(EXIT_FAILURE);
   }
 
   // Create map from vertex ID to vertex properties
   std::map<std::string, VertexProperties> v;
-  for (auto &[id, adj_vertices_json] : j.items()) {
+  for (const auto &[id, adj_vertices_json] : j.items()) {
     v[id] = {
       adj_vertices_json,
       infinity,

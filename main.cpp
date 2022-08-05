@@ -24,7 +24,7 @@ int main(const int argc, const char *argv[])
 
   // Breadth-first search
   while (!q.empty()) {
-    auto focal_vertex = q.front();
+    const auto focal_vertex = q.front();
     q.pop();
     for (const auto &adj_vertex : v[focal_vertex].adjacent_vertices) {
       if (v[adj_vertex].distance == std::numeric_limits<unsigned int>::max()) {
