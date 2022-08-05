@@ -9,13 +9,14 @@
 #include <set>
 #include <string>
 
+constexpr auto infinity = std::numeric_limits<unsigned int>::max();
 struct VertexProperties {
   std::set<std::string> adjacent_vertices;
 
   // The default of std::string is an empty string. We use an empty string
   // as a sign that the parent is unknown.
-  std::string parent;
   unsigned int distance;
+  std::string parent;
 };
 std::map<std::string, VertexProperties> vertices(
   const std::string &adj_list_json_file);

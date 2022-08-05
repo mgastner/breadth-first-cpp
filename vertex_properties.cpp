@@ -34,10 +34,9 @@ std::map<std::string, VertexProperties> vertices(
   for (auto &[id, adj_vertices_json] : j.items()) {
     v[id] = {
       adj_vertices_json,
-      "",  // Empty string as a sign that the parent is unknown.
-
-      // Largest possible unsigned int as symbol of infinite distance.
-      std::numeric_limits<unsigned int>::max()};
+      infinity,
+      ""  // Empty string as a sign that the parent is unknown
+    };
   }
   return v;
 }
