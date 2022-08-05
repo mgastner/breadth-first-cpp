@@ -23,7 +23,7 @@ int main(const int argc, const char *argv[])
               << std::endl;
     std::exit(EXIT_FAILURE);
   }
-  if (g.find(target_vertex) == g.end()) {
+  if (!target_vertex.empty() && g.find(target_vertex) == g.end()) {
     std::cerr << "ERROR: Non-existing target vertex " << target_vertex
               << std::endl;
     std::exit(EXIT_FAILURE);
