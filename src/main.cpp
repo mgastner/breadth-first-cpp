@@ -23,59 +23,37 @@ int main(const int argc, const char *argv[])
               << std::endl;
     std::exit(EXIT_FAILURE);
   }
-  if (!target_vertex.empty() && g.find(target_vertex) == g.end()) {
+  if (g.find(target_vertex) == g.end()) {
     std::cerr << "ERROR: Non-existing target vertex " << target_vertex
               << std::endl;
     std::exit(EXIT_FAILURE);
   }
+  std::queue<std::string> q;
 
   // Discover the source
-  std::queue<std::string> q;
   q.push(source_vertex);
   g[source_vertex].distance = 0;
 
   // Breadth-first search
-  while (!q.empty()) {
-    const auto focal_vertex = q.front();
+  while (g[target_vertex].distance == infinity && !q.empty()) {
+    const auto u = q.front();
     q.pop();
-    for (const auto &adj_vertex : g[focal_vertex].adjacent_vertices) {
-      if (g[adj_vertex].distance == std::numeric_limits<unsigned int>::max()) {
-        q.push(adj_vertex);
-        g[adj_vertex].distance = g[focal_vertex].distance + 1;
-        g[adj_vertex].parent = focal_vertex;
+    for (const auto &v : g[u].adjacent_vertices) {
+      if (g[v].distance == infinity) {
+
+        // Discover adjacent vertex
+        q.push(v);
+        g[v].distance = g[u].distance + 1;
+        g[v].parent = u;
       }
     }
   }
 
-  // Output
-  if (target_vertex.empty()) {
-
-    // If no target vertex is given, print distances and parents of all
-    // vertices
-    std::cout << "\n";
-    for (const auto &[id, prop] : g) {
-      std::cout << "vertex ID: " << id << "\n\tdistance from source: ";
-      if (prop.distance == infinity) {
-        std::cout << "infinity";
-      } else {
-        std::cout << prop.distance;
-      }
-      std::cout << "\n\t";
-      if (prop.parent.empty()) {
-        std::cout << "No parent";
-      } else {
-        std::cout << "Parent: " << prop.parent;
-      }
-      std::cout << std::endl;
-    }
-  } else {
-
-    // If a target vertex is known, print path
-    if (g[target_vertex].distance < infinity) {
-      std::cout << "Path of length " << g[target_vertex].distance << ":\n\t";
-    }
-    print_path(g, source_vertex, target_vertex);
-    std::cout << std::endl;
+  // Print path
+  if (g[target_vertex].distance < infinity) {
+    std::cout << "Path of length " << g[target_vertex].distance << ":\n\t";
   }
+  print_path(g, source_vertex, target_vertex);
+  std::cout << std::endl;
   return EXIT_SUCCESS;
 }

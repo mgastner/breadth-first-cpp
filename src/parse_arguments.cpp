@@ -17,7 +17,7 @@ argparse::ArgumentParser parsed_arguments(
   arguments.add_argument("source_vertex")
     .default_value("none")
     .help("Source vertex: key in JSON file (string)");
-  arguments.add_argument("-t", "--target_vertex")
+  arguments.add_argument("target_vertex")
     .default_value("none")
     .help("Target vertex: key in JSON file (string)");
 
@@ -47,13 +47,16 @@ argparse::ArgumentParser parsed_arguments(
   }
   if (arguments.is_used("target_vertex")) {
     target_vertex = arguments.get("target_vertex");
+  } else {
+    std::cerr << "ERROR: target vertex of breadth-first search unknown.\n"
+              << "Use -h flag to see list of command-line arguments."
+              << std::endl;
+    std::exit(EXIT_FAILURE);
   }
   std::cout << "Reading adjacency list from " << adj_list_json_file
             << std::endl;
   std::cout << "Source vertex of breadth-first search: " << source_vertex
             << std::endl;
-  if (!target_vertex.empty()) {
-    std::cout << "Target vertex: " << target_vertex << std::endl;
-  }
+  std::cout << "Target vertex: " << target_vertex << std::endl;
   return arguments;
 }
